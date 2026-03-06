@@ -13,7 +13,7 @@ O objetivo deste projeto é servir como minha vitrine profissional na web.
 
 # Preview
 
-![Preview do portfólio](public/images/pantherium.png)
+![Preview do portfólio](public/images/Captura de tela 2026-03-06 053817.png)
 
 ---
 
