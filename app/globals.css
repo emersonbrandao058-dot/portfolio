@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@300;400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 220 15% 5%;
+  --foreground: 210 20% 94%;
+
+  --accent: 171 80% 52%;
+  --accent-foreground: 220 15% 5%;
+  --accent-dim: 171 60% 36%;
+  --accent-glow: 171 80% 42% / 0.35;
+
+  --surface: 220 14% 8%;
+  --surface-elevated: 220 14% 11%;
+  --surface-border: 220 14% 18%;
+
+  --muted: 220 14% 30%;
+  --muted-foreground: 220 10% 55%;
+
+  --font-display: 'DM Serif Display';
+  --font-body: 'DM Sans';
+  --font-mono: 'JetBrains Mono';
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--accent-dim)) hsl(var(--surface));
+}
+
+html::-webkit-scrollbar {
+  width: 6px;
+}
+html::-webkit-scrollbar-track {
+  background: hsl(var(--surface));
+}
+html::-webkit-scrollbar-thumb {
+  background: hsl(var(--accent-dim));
+  border-radius: 3px;
+}
+html::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--accent));
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-body), sans-serif;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: hsl(var(--accent) / 0.3);
+  color: hsl(var(--foreground));
+}
+
+/* Custom utility classes */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .font-display {
+    font-family: var(--font-display), serif;
+  }
+
+  .font-mono {
+    font-family: var(--font-mono), monospace;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(var(--foreground)) 0%, hsl(var(--accent)) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-text-subtle {
+    background: linear-gradient(135deg, hsl(var(--foreground)) 40%, hsl(var(--muted-foreground)) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glass {
+    background: hsl(var(--surface) / 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid hsl(var(--surface-border) / 0.8);
+  }
+
+  .glass-elevated {
+    background: hsl(var(--surface-elevated) / 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--surface-border));
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 24px hsl(var(--accent-glow)), 0 0 80px hsl(var(--accent-glow) / 0.5);
+  }
+
+  .text-accent {
+    color: hsl(var(--accent));
+  }
+
+  .border-accent {
+    border-color: hsl(var(--accent));
+  }
+
+  .bg-surface {
+    background-color: hsl(var(--surface));
+  }
+
+  .bg-surface-elevated {
+    background-color: hsl(var(--surface-elevated));
+  }
+
+  .noise-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+/* Animated gradient orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Scanline effect */
+.scanline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, hsl(var(--accent) / 0.15), transparent);
+  animation: scan 10s linear infinite;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Section transitions */
+.section-reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.section-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
