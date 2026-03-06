@@ -1,47 +1,75 @@
-# Emerson Brandão — Portfolio Premium
+# Emerson Brandão — Portfolio
 
-Portfolio pessoal desenvolvido com Next.js 14, TypeScript, Tailwind CSS e Framer Motion.
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)]()
+[![TypeScript](https://img.shields.io/badge/TypeScript-blue?logo=typescript)]()
+[![Tailwind](https://img.shields.io/badge/TailwindCSS-38bdf8?logo=tailwind-css)]()
+[![Framer Motion](https://img.shields.io/badge/Framer%20Motion-black)]()
 
-## Stack
+Portfólio pessoal desenvolvido para apresentar meus projetos, minhas habilidades e minha evolução como desenvolvedor.
 
-- **Next.js 14** (App Router)
-- **TypeScript**
-- **Tailwind CSS**
-- **Framer Motion** (animações)
-- **Lucide React** (ícones)
-- **DM Serif Display + DM Sans + JetBrains Mono** (tipografia)
+O objetivo deste projeto é servir como minha vitrine profissional na web.
 
-## Design
+---
 
-- Dark premium com paleta esmeralda / violeta
-- Glassmorphism e depth layers
-- Animações suaves com Framer Motion
-- Grid pattern + orbs de glow
-- Scanline effect sutil
-- Totalmente responsivo (mobile, tablet, desktop)
+# Preview
 
-## Estrutura
+![Preview do portfólio](public/images/pantherium.png)
 
-```
+---
+
+# Sobre o projeto
+
+Este portfólio foi desenvolvido com foco em:
+
+- design moderno
+- interface premium
+- organização de código
+- componentização
+- experiência visual agradável
+- responsividade
+
+O layout utiliza uma estética **dark premium**, com animações suaves e profundidade visual para destacar conteúdo e projetos.
+
+---
+
+# Tecnologias utilizadas
+
+- Next.js
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Lucide React
+
+---
+
+# Estrutura do projeto
+
+```bash
 portfolio/
 ├── app/
-│   ├── layout.tsx          # Root layout com metadata
-│   ├── page.tsx            # Homepage
-│   ├── globals.css         # Estilos globais + CSS variables
-│   ├── sobre/page.tsx
-│   ├── projetos/page.tsx
-│   └── contato/page.tsx
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── globals.css
+│   ├── sobre/
+│   │   └── page.tsx
+│   ├── projetos/
+│   │   └── page.tsx
+│   └── contato/
+│       └── page.tsx
+│
 ├── components/
 │   ├── layout/
-│   │   ├── Header.tsx      # Nav fixa com blur + active state
+│   │   ├── Header.tsx
 │   │   ├── Footer.tsx
 │   │   └── Container.tsx
+│   │
 │   ├── sections/
-│   │   ├── Hero.tsx        # Section principal com code card flutuante
-│   │   ├── About.tsx       # Sobre com stats cards
-│   │   ├── Skills.tsx      # Grid de habilidades por categoria
-│   │   ├── Projects.tsx    # Grid de projetos
-│   │   └── Contact.tsx     # CTA + cards de contato
+│   │   ├── Hero.tsx
+│   │   ├── About.tsx
+│   │   ├── Skills.tsx
+│   │   ├── Projects.tsx
+│   │   └── Contact.tsx
+│   │
 │   └── ui/
 │       ├── GlowBackground.tsx
 │       ├── SectionTitle.tsx
@@ -50,50 +78,74 @@ portfolio/
 │       ├── ProjectCard.tsx
 │       ├── SocialLinks.tsx
 │       └── AnimatedGrid.tsx
+│
 ├── lib/
-│   ├── data.ts             # Dados centralizados
-│   └── utils.ts            # cn(), helpers
+│   ├── data.ts
+│   └── utils.ts
+│
+├── public/
+│   └── images/
+│
 ├── package.json
 ├── tailwind.config.ts
 ├── tsconfig.json
 └── next.config.js
-```
 
-## Instalação
 
-```bash
-# 1. Instale as dependências
-npm install
+Seções do portfólio
+Hero
 
-# 2. Rode em modo desenvolvimento
-npm run dev
+Apresentação inicial com introdução profissional e links principais.
 
-# 3. Acesse
-# http://localhost:3000
-```
+Sobre
 
-## Build para produção
+Resumo sobre mim e minha trajetória como desenvolvedor.
 
-```bash
-npm run build
-npm start
-```
+Habilidades
 
-## Deploy recomendado
+Lista das principais tecnologias que fazem parte da minha stack atual.
 
-Deploy na [Vercel](https://vercel.com) — integração nativa com Next.js:
+Projetos
 
-```bash
-npx vercel
-```
+Sessão com projetos desenvolvidos e links para repositórios.
 
-## Personalização
+Contato
 
-Edite `lib/data.ts` para atualizar:
-- Informações pessoais
-- Links sociais
-- Projetos
-- Skills
-- Contato
+Formas de contato e redes profissionais.
 
-Edite `app/globals.css` para ajustar as CSS variables de cor.
+Projetos em destaque
+Pantherium
+
+Repositório:
+https://github.com/emersonbrandao058-dot/pantherium
+
+Demo:
+https://pantherium.vercel.app/
+
+META-10
+
+Repositório:
+https://github.com/emersonbrandao058-dot/META-10
+
+Monitor Inteligente
+
+Repositório:
+https://github.com/emersonbrandao058-dot/MONITOR-INTELIGENTE
+
+Contato
+
+Email
+emersonbrandao058@gmail.com
+
+GitHub
+https://github.com/emersonbrandao058-dot
+
+LinkedIn
+https://www.linkedin.com/in/emerson-brandao-b33839337
+
+Instagram
+https://www.instagram.com/brandao.emerson/
+
+Licença
+
+Projeto de portfólio pessoal.
