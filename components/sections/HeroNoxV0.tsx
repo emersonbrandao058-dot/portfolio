@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import {
   motion,
@@ -14,8 +15,11 @@ import { ArrowDownRight, Braces, Layers3, Workflow } from "lucide-react";
 import { projects } from "@/lib/data";
 import styles from "./HeroNoxV0.module.css";
 
+const NoxScene = dynamic(() => import("./NoxScene"), { ssr: false });
+
 export default function HeroNoxV0() {
   const sceneRef = useRef<HTMLElement>(null);
+  const pointerRef = useRef({ x: 0, y: 0 });
   const shouldReduceMotion = useReducedMotion();
   const featuredProject = projects.find((project) => project.featured) ?? projects[0];
 
@@ -29,8 +33,6 @@ export default function HeroNoxV0() {
   const smoothX = useSpring(pointerX, { stiffness: 190, damping: 30, mass: 0.22 });
   const smoothY = useSpring(pointerY, { stiffness: 190, damping: 30, mass: 0.22 });
 
-  const noxRotateY = useTransform(smoothX, [-0.5, 0.5], [-2.6, 2.6]);
-  const noxRotateX = useTransform(smoothY, [-0.5, 0.5], [1.8, -1.8]);
   const projectRotateY = useTransform(smoothX, [-0.5, 0.5], [1.2, -1.2]);
   const projectRotateX = useTransform(smoothY, [-0.5, 0.5], [-0.8, 0.8]);
 
@@ -54,12 +56,20 @@ export default function HeroNoxV0() {
 
   function handlePointerMove(event: React.PointerEvent<HTMLDivElement>) {
     if (shouldReduceMotion) return;
+
     const rect = event.currentTarget.getBoundingClientRect();
-    pointerX.set((event.clientX - rect.left) / rect.width - 0.5);
-    pointerY.set((event.clientY - rect.top) / rect.height - 0.5);
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+    pointerRef.current.x = x;
+    pointerRef.current.y = y;
+    pointerX.set(x);
+    pointerY.set(y);
   }
 
   function resetPointer() {
+    pointerRef.current.x = 0;
+    pointerRef.current.y = 0;
     pointerX.set(0);
     pointerY.set(0);
   }
@@ -153,22 +163,10 @@ export default function HeroNoxV0() {
                     : { x: noxX, y: noxY, scale: noxScale, opacity: noxOpacity }
                 }
               >
-                <motion.div
-                  className={styles.noxInner}
-                  style={shouldReduceMotion ? undefined : { rotateX: noxRotateX, rotateY: noxRotateY }}
-                >
-                  <div className={styles.noxGlow} aria-hidden="true" />
-                  <div className={styles.noxHood}>
-                    <div className={styles.noxVoid} />
-                  </div>
-                  <div className={styles.noxShoulders} />
-                  <div className={styles.noxTorso}>
-                    <div className={styles.noxPocket} />
-                  </div>
-                  <div className={styles.noxArmLeft} />
-                  <div className={styles.noxArmRight} />
-                </motion.div>
-                <div className={styles.noxCaption}>NOX — digital alter ego</div>
+                <div className={styles.noxInner}>
+                  <NoxScene pointerRef={pointerRef} reducedMotion={Boolean(shouldReduceMotion)} />
+                </div>
+                <div className={styles.noxCaption}>NOX — digital alter ego / GLB v0.1</div>
               </motion.div>
 
               <div className={styles.depthLine} aria-hidden="true" />
@@ -205,7 +203,7 @@ export default function HeroNoxV0() {
 
           <div className={styles.v0Note}>
             <Workflow size={14} aria-hidden="true" />
-            <span>V0.2 — narrativa e composição em validação.</span>
+            <span>V0.3 — GLB real integrado; composição e iluminação em validação.</span>
           </div>
         </div>
       </section>
