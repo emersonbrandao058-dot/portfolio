@@ -10,15 +10,7 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import {
-  ArrowDownRight,
-  Braces,
-  Cpu,
-  Layers3,
-  Move3D,
-  Sparkles,
-  Workflow,
-} from "lucide-react";
+import { ArrowDownRight, Braces, Layers3, Workflow } from "lucide-react";
 import { projects } from "@/lib/data";
 import styles from "./HeroNoxV0.module.css";
 
@@ -34,34 +26,31 @@ export default function HeroNoxV0() {
 
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
-  const smoothX = useSpring(pointerX, { stiffness: 180, damping: 28, mass: 0.25 });
-  const smoothY = useSpring(pointerY, { stiffness: 180, damping: 28, mass: 0.25 });
+  const smoothX = useSpring(pointerX, { stiffness: 190, damping: 30, mass: 0.22 });
+  const smoothY = useSpring(pointerY, { stiffness: 190, damping: 30, mass: 0.22 });
 
-  const rotateY = useTransform(smoothX, [-0.5, 0.5], [-3, 3]);
-  const rotateX = useTransform(smoothY, [-0.5, 0.5], [2.5, -2.5]);
+  const noxRotateY = useTransform(smoothX, [-0.5, 0.5], [-2.6, 2.6]);
+  const noxRotateX = useTransform(smoothY, [-0.5, 0.5], [1.8, -1.8]);
+  const projectRotateY = useTransform(smoothX, [-0.5, 0.5], [1.2, -1.2]);
+  const projectRotateX = useTransform(smoothY, [-0.5, 0.5], [-0.8, 0.8]);
 
-  // V0.1: movimentos curtos. O scroll deve conduzir, não segurar o usuário.
-  const copyY = useTransform(scrollYProgress, [0, 0.72, 1], [0, -8, -28]);
-  const copyOpacity = useTransform(scrollYProgress, [0, 0.78, 1], [1, 1, 0.2]);
+  const copyY = useTransform(scrollYProgress, [0, 1], [0, -24]);
+  const copyOpacity = useTransform(scrollYProgress, [0, 0.78, 1], [1, 1, 0.3]);
 
-  const noxY = useTransform(scrollYProgress, [0, 0.72, 1], [0, -8, -42]);
-  const noxScale = useTransform(scrollYProgress, [0, 0.7, 1], [1, 0.99, 0.92]);
-  const noxOpacity = useTransform(scrollYProgress, [0, 0.86, 1], [1, 1, 0.45]);
+  const noxY = useTransform(scrollYProgress, [0, 1], [0, -18]);
+  const noxX = useTransform(scrollYProgress, [0, 1], [0, 24]);
+  const noxScale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
+  const noxOpacity = useTransform(scrollYProgress, [0, 0.86, 1], [1, 1, 0.62]);
 
-  const uiY = useTransform(scrollYProgress, [0, 1], [0, -24]);
-  const uiX = useTransform(scrollYProgress, [0, 1], [0, -18]);
-  const motionY = useTransform(scrollYProgress, [0, 1], [0, -18]);
-  const motionX = useTransform(scrollYProgress, [0, 1], [0, 24]);
-  const devY = useTransform(scrollYProgress, [0, 1], [0, 24]);
-  const devX = useTransform(scrollYProgress, [0, 1], [0, -20]);
-  const systemY = useTransform(scrollYProgress, [0, 1], [0, 22]);
-  const systemX = useTransform(scrollYProgress, [0, 1], [0, 26]);
+  const interfaceX = useTransform(scrollYProgress, [0, 1], [0, -16]);
+  const interfaceY = useTransform(scrollYProgress, [0, 1], [0, -12]);
+  const engineeringX = useTransform(scrollYProgress, [0, 1], [0, 18]);
+  const engineeringY = useTransform(scrollYProgress, [0, 1], [0, 14]);
 
-  const projectY = useTransform(scrollYProgress, [0, 0.75, 1], [0, 0, 38]);
-  const projectOpacity = useTransform(scrollYProgress, [0, 0.3, 0.88, 1], [0.7, 1, 1, 0.35]);
-
-  const auraScale = useTransform(scrollYProgress, [0, 0.72, 1], [1, 1.04, 0.94]);
-  const auraOpacity = useTransform(scrollYProgress, [0, 0.8, 1], [0.72, 0.62, 0.25]);
+  const projectY = useTransform(scrollYProgress, [0, 1], [0, 20]);
+  const projectX = useTransform(scrollYProgress, [0, 1], [0, -10]);
+  const projectScale = useTransform(scrollYProgress, [0, 0.65, 1], [0.96, 1, 1.035]);
+  const projectOpacity = useTransform(scrollYProgress, [0, 0.82, 1], [0.78, 1, 0.7]);
 
   function handlePointerMove(event: React.PointerEvent<HTMLDivElement>) {
     if (shouldReduceMotion) return;
@@ -78,11 +67,7 @@ export default function HeroNoxV0() {
   return (
     <>
       <section ref={sceneRef} className={styles.scene} aria-labelledby="hero-v0-title">
-        <div
-          className={styles.sticky}
-          onPointerMove={handlePointerMove}
-          onPointerLeave={resetPointer}
-        >
+        <div className={styles.sticky} onPointerMove={handlePointerMove} onPointerLeave={resetPointer}>
           <div className={styles.viewport}>
             <motion.div
               className={styles.copy}
@@ -96,125 +81,103 @@ export default function HeroNoxV0() {
               </h1>
 
               <p className={styles.description}>
-                Código, interface e movimento no mesmo sistema. Construo produtos digitais com
-                intenção visual, estrutura sólida e atenção à experiência real de quem usa.
+                Da interface à lógica, construo produtos digitais completos com atenção à experiência,
+                estrutura e movimento.
               </p>
 
               <div className={styles.actions}>
                 <a className={styles.primary} href="#selected-work">
-                  Ver projetos
-                  <ArrowDownRight size={17} aria-hidden="true" />
+                  Ver projetos <ArrowDownRight size={17} aria-hidden="true" />
                 </a>
-                <Link className={styles.secondary} href="/contato">
-                  Falar comigo
-                </Link>
+                <Link className={styles.secondary} href="/contato">Contato</Link>
               </div>
             </motion.div>
 
-            <div className={styles.stage} aria-label="Mapa visual das áreas de atuação">
+            <div className={styles.stage} aria-label="Nox e áreas de atuação">
               <motion.div
-                className={styles.aura}
-                style={shouldReduceMotion ? undefined : { scale: auraScale, opacity: auraOpacity }}
-                aria-hidden="true"
-              />
+                className={styles.projectWindow}
+                style={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        x: projectX,
+                        y: projectY,
+                        scale: projectScale,
+                        opacity: projectOpacity,
+                        rotateX: projectRotateX,
+                        rotateY: projectRotateY,
+                      }
+                }
+              >
+                <div className={styles.windowBar}>
+                  <span /><span /><span />
+                  <strong>selected-work / 01</strong>
+                </div>
+                <div className={styles.projectPreview} />
+                <div className={styles.projectFooter}>
+                  <div>
+                    <span>Em destaque</span>
+                    <strong>{featuredProject.title}</strong>
+                  </div>
+                  <span>{featuredProject.stack.slice(0, 3).join(" · ")}</span>
+                </div>
+              </motion.div>
+
+              <motion.div
+                className={`${styles.signal} ${styles.interfaceSignal}`}
+                style={shouldReduceMotion ? undefined : { x: interfaceX, y: interfaceY }}
+              >
+                <Layers3 size={15} aria-hidden="true" />
+                <div>
+                  <strong>Interface</strong>
+                  <span>UI · UX · Motion</span>
+                </div>
+              </motion.div>
+
+              <motion.div
+                className={`${styles.signal} ${styles.engineeringSignal}`}
+                style={shouldReduceMotion ? undefined : { x: engineeringX, y: engineeringY }}
+              >
+                <Braces size={15} aria-hidden="true" />
+                <div>
+                  <strong>Engineering</strong>
+                  <span>Logic · APIs · Systems</span>
+                </div>
+              </motion.div>
 
               <motion.div
                 className={styles.noxOuter}
                 style={
                   shouldReduceMotion
                     ? undefined
-                    : { y: noxY, scale: noxScale, opacity: noxOpacity }
+                    : { x: noxX, y: noxY, scale: noxScale, opacity: noxOpacity }
                 }
               >
                 <motion.div
                   className={styles.noxInner}
-                  style={shouldReduceMotion ? undefined : { rotateX, rotateY }}
+                  style={shouldReduceMotion ? undefined : { rotateX: noxRotateX, rotateY: noxRotateY }}
                 >
-                  <div className={styles.noxBody}>
-                    <div className={styles.noxShell} />
-                    <div className={styles.noxFace} />
-                    <span className={`${styles.noxEye} ${styles.noxEyeLeft}`} />
-                    <span className={`${styles.noxEye} ${styles.noxEyeRight}`} />
-                    <div className={styles.noxTorso} />
-                    <div className={styles.noxLabel}>
-                      <span>NOX</span>
-                      <span>V0 / proxy</span>
-                    </div>
+                  <div className={styles.noxGlow} aria-hidden="true" />
+                  <div className={styles.noxHood}>
+                    <div className={styles.noxVoid} />
                   </div>
+                  <div className={styles.noxShoulders} />
+                  <div className={styles.noxTorso}>
+                    <div className={styles.noxPocket} />
+                  </div>
+                  <div className={styles.noxArmLeft} />
+                  <div className={styles.noxArmRight} />
                 </motion.div>
+                <div className={styles.noxCaption}>NOX — digital alter ego</div>
               </motion.div>
 
-              <div className={styles.platform} aria-hidden="true" />
-
-              <motion.div
-                className={`${styles.panel} ${styles.uiPanel}`}
-                style={shouldReduceMotion ? undefined : { x: uiX, y: uiY }}
-              >
-                <div className={styles.panelHeader}>
-                  <Layers3 size={15} aria-hidden="true" />
-                  <span>UI / UX</span>
-                </div>
-                <p className={styles.panelBody}>Hierarquia, interface, fluxo e intenção visual.</p>
-              </motion.div>
-
-              <motion.div
-                className={`${styles.panel} ${styles.motionPanel}`}
-                style={shouldReduceMotion ? undefined : { x: motionX, y: motionY }}
-              >
-                <div className={styles.panelHeader}>
-                  <Move3D size={15} aria-hidden="true" />
-                  <span>Motion</span>
-                </div>
-                <p className={styles.panelBody}>Scroll, microinterações e narrativa em movimento.</p>
-              </motion.div>
-
-              <motion.div
-                className={`${styles.panel} ${styles.devPanel}`}
-                style={shouldReduceMotion ? undefined : { x: devX, y: devY }}
-              >
-                <div className={styles.panelHeader}>
-                  <Braces size={15} aria-hidden="true" />
-                  <span>Development</span>
-                </div>
-                <p className={styles.panelBody}>React, Next.js, TypeScript e integrações web.</p>
-              </motion.div>
-
-              <motion.div
-                className={`${styles.panel} ${styles.systemPanel}`}
-                style={shouldReduceMotion ? undefined : { x: systemX, y: systemY }}
-              >
-                <div className={styles.panelHeader}>
-                  <Cpu size={15} aria-hidden="true" />
-                  <span>Systems</span>
-                </div>
-                <p className={styles.panelBody}>Dados, APIs, lógica e estrutura por trás da interface.</p>
-              </motion.div>
-
-              <motion.div
-                className={styles.projectPanelOuter}
-                style={shouldReduceMotion ? undefined : { y: projectY, opacity: projectOpacity }}
-              >
-                <div className={styles.projectPanel}>
-                  <div className={styles.projectPreview}>
-                    <div className={styles.projectMeta}>
-                      <div>
-                        <strong>{featuredProject.title}</strong>
-                        <span>{featuredProject.stack.slice(0, 3).join(" · ")}</span>
-                      </div>
-                      <Sparkles size={16} aria-hidden="true" />
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+              <div className={styles.depthLine} aria-hidden="true" />
             </div>
           </div>
 
           <span className={styles.scrollHint}>Scroll para explorar</span>
           <div className={styles.progress} aria-hidden="true">
-            <motion.div
-              className={styles.progressBar}
-              style={shouldReduceMotion ? undefined : { scaleX: scrollYProgress }}
-            />
+            <motion.div className={styles.progressBar} style={shouldReduceMotion ? undefined : { scaleX: scrollYProgress }} />
           </div>
         </div>
       </section>
@@ -222,18 +185,10 @@ export default function HeroNoxV0() {
       <section id="selected-work" className={styles.selectedWork} aria-labelledby="selected-work-title">
         <div className={styles.workInner}>
           <p className={styles.workKicker}>Selected work / 01</p>
-
-          <h2 id="selected-work-title" className={styles.workTitle}>
-            Projeto primeiro. Efeito depois.
-          </h2>
+          <h2 id="selected-work-title" className={styles.workTitle}>Projeto primeiro.<br />Efeito depois.</h2>
 
           <article className={styles.workCard}>
-            <div
-              className={styles.workVisual}
-              role="img"
-              aria-label={`Prévia do projeto ${featuredProject.title}`}
-            />
-
+            <div className={styles.workVisual} role="img" aria-label={`Prévia do projeto ${featuredProject.title}`} />
             <div className={styles.workCopy}>
               <span className={styles.workIndex}>01 / {featuredProject.year}</span>
               <h2>{featuredProject.title}</h2>
@@ -250,7 +205,7 @@ export default function HeroNoxV0() {
 
           <div className={styles.v0Note}>
             <Workflow size={14} aria-hidden="true" />
-            <span>V0: composição, profundidade, mouse e narrativa de scroll.</span>
+            <span>V0.2 — narrativa e composição em validação.</span>
           </div>
         </div>
       </section>
