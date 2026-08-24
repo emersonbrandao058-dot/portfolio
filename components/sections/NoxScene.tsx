@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, useEffect, useMemo, useRef } from "react";
+import type { MutableRefObject } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
@@ -11,7 +12,7 @@ export type NoxPointer = {
 };
 
 type NoxSceneProps = {
-  pointerRef: React.MutableRefObject<NoxPointer>;
+  pointerRef: MutableRefObject<NoxPointer>;
   reducedMotion: boolean;
 };
 
