@@ -20,7 +20,6 @@ function NoxModel({ pointerRef, reducedMotion }: NoxSceneProps) {
   const groupRef = useRef<THREE.Group>(null);
   const { scene } = useGLTF("/models/nox-v01.glb");
 
-  // Clone the loaded scene so material tuning stays local to this component.
   const model = useMemo(() => scene.clone(true), [scene]);
 
   useEffect(() => {
@@ -82,7 +81,7 @@ function NoxModel({ pointerRef, reducedMotion }: NoxSceneProps) {
 export default function NoxScene({ pointerRef, reducedMotion }: NoxSceneProps) {
   return (
     <Canvas
-      dpr={reducedMotion ? 1 : [1, 1.35]}
+      dpr={1}
       frameloop={reducedMotion ? "demand" : "always"}
       camera={{ position: [0, 0.02, 3.55], fov: 29, near: 0.1, far: 10 }}
       gl={{
