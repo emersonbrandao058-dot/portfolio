@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Terminal } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { AnimatePresence, motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
 import { navLinks, personalInfo } from "@/lib/data";
 import Container from "./Container";
 
@@ -15,166 +14,114 @@ export default function Header() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => setScrolled(window.scrollY > 24);
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
+  useEffect(() => setMobileOpen(false), [pathname]);
 
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [mobileOpen]);
 
   return (
-    <motion.header
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+    <header
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 ${
         scrolled
-          ? "glass border-b border-surface-border/50 py-3"
-          : "bg-transparent py-5"
-      )}
+          ? "border-white/[0.07] bg-[#08090c]/95"
+          : "border-transparent bg-[#08090c]/55"
+      }`}
     >
       <Container>
-        <nav className="flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="group flex items-center gap-2">
-            <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-accent/10 border border-accent/30 group-hover:bg-accent/20 transition-all duration-300">
-              <Terminal
-                size={15}
-                className="text-accent group-hover:scale-110 transition-transform duration-300"
-              />
-              <div className="absolute inset-0 rounded-lg glow-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
-            <span className="font-display text-lg tracking-tight">
-              <span className="text-foreground/90">{personalInfo.firstName}</span>
-              <span className="text-accent">.</span>
-              <span className="text-muted-foreground text-sm font-body font-light">dev</span>
+        <nav className="flex h-[66px] items-center justify-between">
+          <Link href="/" className="group flex items-baseline gap-2" aria-label="Página inicial">
+            <span className="text-sm font-semibold tracking-[-0.02em] text-white/95">
+              {personalInfo.name}
+            </span>
+            <span className="hidden text-[10px] uppercase tracking-[0.18em] text-white/30 sm:inline">
+              Full-stack developer
             </span>
           </Link>
 
-          {/* Desktop nav */}
-          <ul className="hidden md:flex items-center gap-1">
+          <ul className="hidden items-center gap-7 md:flex">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+              const active = pathname === link.href;
               return (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className={cn(
-                      "relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 group",
-                      isActive
-                        ? "text-accent"
-                        : "text-muted-foreground hover:text-foreground"
-                    )}
+                    className={`relative py-2 text-[13px] transition-colors ${
+                      active ? "text-white" : "text-white/48 hover:text-white/82"
+                    }`}
                   >
-                    {isActive && (
-                      <motion.div
-                        layoutId="nav-active"
-                        className="absolute inset-0 bg-accent/10 rounded-lg border border-accent/20"
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                      />
+                    {link.label}
+                    {active && (
+                      <span className="absolute inset-x-0 -bottom-[1px] h-px bg-[#6f84ff]" />
                     )}
-                    <span className="relative z-10">{link.label}</span>
                   </Link>
                 </li>
               );
             })}
           </ul>
 
-          {/* CTA */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:block">
             <Link
               href="/contato"
-              className={cn(
-                "px-4 py-2 text-sm font-medium rounded-lg border transition-all duration-300",
-                "border-accent/40 text-accent hover:bg-accent hover:text-accent-foreground",
-                "hover:shadow-glow-sm active:scale-95"
-              )}
+              className="text-[12px] uppercase tracking-[0.14em] text-white/60 transition-colors hover:text-white"
             >
-              Falar comigo
+              Contato ↗
             </Link>
           </div>
 
-          {/* Mobile toggle */}
           <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden flex items-center justify-center w-9 h-9 rounded-lg glass text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="Toggle menu"
+            type="button"
+            onClick={() => setMobileOpen((open) => !open)}
+            className="grid h-9 w-9 place-items-center border border-white/10 text-white/70 md:hidden"
+            aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={mobileOpen}
           >
-            {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+            {mobileOpen ? <X size={17} /> : <Menu size={17} />}
           </button>
         </nav>
       </Container>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden border-t border-surface-border/50 bg-background/95 backdrop-blur-xl"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.18 }}
+            className="border-t border-white/[0.07] bg-[#08090c] md:hidden"
           >
-            <Container className="py-6">
-              <ul className="flex flex-col gap-1">
-                {navLinks.map((link, i) => {
-                  const isActive = pathname === link.href;
+            <Container className="py-5">
+              <ul className="flex flex-col">
+                {navLinks.map((link) => {
+                  const active = pathname === link.href;
                   return (
-                    <motion.li
-                      key={link.href}
-                      initial={{ opacity: 0, x: -12 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.07 }}
-                    >
+                    <li key={link.href}>
                       <Link
                         href={link.href}
-                        className={cn(
-                          "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all",
-                          isActive
-                            ? "bg-accent/10 text-accent border border-accent/20"
-                            : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
-                        )}
+                        className={`flex items-center justify-between border-b border-white/[0.06] py-4 text-sm ${
+                          active ? "text-white" : "text-white/50"
+                        }`}
                       >
-                        {isActive && (
-                          <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                        )}
                         {link.label}
+                        <span className="text-[#6f84ff]">↗</span>
                       </Link>
-                    </motion.li>
+                    </li>
                   );
                 })}
               </ul>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3 }}
-                className="mt-4 pt-4 border-t border-surface-border/50"
-              >
-                <Link
-                  href="/contato"
-                  className="flex items-center justify-center gap-2 w-full py-3 text-sm font-medium rounded-xl bg-accent/10 border border-accent/30 text-accent hover:bg-accent hover:text-accent-foreground transition-all"
-                >
-                  Falar comigo
-                </Link>
-              </motion.div>
             </Container>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </header>
   );
 }
