@@ -69,14 +69,9 @@ export default function Header() {
             })}
           </ul>
 
-          <div className="hidden md:block">
-            <Link
-              href="/contato"
-              className="text-[12px] uppercase tracking-[0.14em] text-white/60 transition-colors hover:text-white"
-            >
-              Contato ↗
-            </Link>
-          </div>
+          <span className="hidden text-[10px] uppercase tracking-[0.18em] text-white/28 md:block">
+            Portfolio / 2026
+          </span>
 
           <button
             type="button"
